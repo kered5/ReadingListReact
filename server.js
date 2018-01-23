@@ -15,13 +15,16 @@ app.use(routes);
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
+
+var databaseUri = "mongodb://localhost/reactreadinglist";
+
+if (process.env.MONGODB_URI){
+	mongoose.connect (process.env.MONGODB_URI);
+}
+else{
+	mongoose.connect (databaseUri);
+}
 // Connect to the Mongo DB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist",
-  {
-    useMongoClient: true
-  }
-);
 
 // Start the API server
 app.listen(PORT, function() {
